@@ -42,15 +42,17 @@ JWT_REFRESH_EXPIRY_DAYS=7
 docker-compose up -d
 ```
 
-Подожди немного, пока всё поднимется. Backend будет доступен на `http://localhost:8080`, frontend на `http://localhost:8081`. MinIO консоль на `http://localhost:9001` (логин/пароль из `.env`).
+Подожди немного, пока всё поднимется. Frontend на `http://localhost:8081`. Backend API: по умолчанию `http://localhost:8082` (переменная `BACKEND_HOST_PORT` в `.env`; внутри контейнера порт 8080). MinIO консоль на `http://localhost:9001` (логин/пароль из `.env`).
 
 3. Проверь, что всё работает:
 
 ```bash
-curl http://localhost:8080/health
+curl http://localhost:8082/health
 ```
 
 Должен вернуться JSON со статусом.
+
+Фронтенд в Docker собирается с `REACT_APP_API_*`, указывающими на `http://localhost:<BACKEND_HOST_PORT>`. Если поменял `BACKEND_HOST_PORT` в `.env`, пересобери образ: `docker compose build frontend-app --no-cache` и снова `docker compose up -d`.
 
 ## Что внутри
 
@@ -173,7 +175,8 @@ Frontend запустится на `http://localhost:3000` (или другом 
 
 Основные переменные, которые нужно настроить:
 
-- `PORT` - порт для backend (по умолчанию 8080)
+- `PORT` - порт процесса backend при локальном `go run` (по умолчанию 8080)
+- `BACKEND_HOST_PORT` - порт API на хосте при `docker compose` (по умолчанию 8082, если 8080 занят)
 - `DATABASE_URL` - строка подключения к PostgreSQL
 - `MINIO_ENDPOINT` - адрес MinIO сервера
 - `MINIO_ACCESS_KEY_ID` и `MINIO_SECRET_ACCESS_KEY` - ключи для MinIO

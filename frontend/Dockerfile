@@ -12,7 +12,11 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the application
+ARG REACT_APP_API_BASE_URL=http://localhost:8082/api/v1
+ARG REACT_APP_API_ORIGIN=http://localhost:8082
+ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+ENV REACT_APP_API_ORIGIN=$REACT_APP_API_ORIGIN
+
 RUN npm run build
 
 # Stage 2: Production
