@@ -60,7 +60,7 @@ const Profile = ({ isLightTheme, onThemeToggle }) => {
         // Обрабатываем фото URL, если это относительный путь
         let photoUrl = savedProfileData.photo || null;
         if (photoUrl && !photoUrl.startsWith('http') && !photoUrl.startsWith('data:')) {
-          const apiBaseUrl = 'https://namico.ru/api/v1';
+          const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'https://www.namico.ru/api/v1';
           const cleanPath = photoUrl.startsWith('/') ? photoUrl.substring(1) : photoUrl;
           photoUrl = `${apiBaseUrl}/${cleanPath}`;
         }
@@ -592,7 +592,7 @@ const Profile = ({ isLightTheme, onThemeToggle }) => {
                   setAuthError(null);
                 }}
               >
-                Авторизация
+                Регистрация
               </button>
             </div>
 
@@ -776,6 +776,16 @@ const Profile = ({ isLightTheme, onThemeToggle }) => {
         </div>
         <h1>Профиль</h1>
         <p className="subtitle">Заполните информацию о себе</p>
+        <div className="theme-toggle-wrapper">
+          <label className="theme-toggle">
+            <input
+              type="checkbox"
+              checked={isLightTheme}
+              onChange={() => onThemeToggle(!isLightTheme)}
+            />
+            <span className="theme-toggle-slider" />
+          </label>
+        </div>
         <button className="logout-button" onClick={handleLogout} title="Выйти">
           <svg viewBox="0 0 24 24">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>

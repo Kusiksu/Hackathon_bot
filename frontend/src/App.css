@@ -182,9 +182,15 @@ body.light-theme * {
         }
 
         .theme-toggle-wrapper {
+            position: absolute;
+            top: 0;
+            right: 56px; /* тумблер левее кнопки выхода */
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+        }
+
+        .logout-button {
             position: absolute;
             top: 0;
             right: 0;

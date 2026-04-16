@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { apiClient, refreshApiClient, updateToken } from '../api/client';
 import { useApp } from '../context/AppContext';
 
@@ -46,92 +52,47 @@ const Login = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div style={{ 
-      maxWidth: '400px', 
-      margin: '0 auto', 
-      padding: '30px',
-      backgroundColor: '#fff',
-      borderRadius: '12px',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-    }}>
-      <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Вход в систему</h2>
-      
-      <form onSubmit={handleLogin}>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Телефон:
-          </label>
-          <input
-            type="text"
+    <Paper
+      elevation={3}
+      sx={{
+        maxWidth: 400,
+        mx: 'auto',
+        p: 3,
+      }}
+    >
+      <Typography variant="h6" component="h2" align="center" gutterBottom>
+        Вход в систему
+      </Typography>
+
+      <form onSubmit={handleLogin} noValidate>
+        <Stack spacing={2}>
+          <TextField
+            label="Телефон"
+            type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ccc',
-              borderRadius: '6px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            fullWidth
+            autoComplete="tel"
             placeholder="+7 (999) 123-45-67"
           />
-        </div>
-
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Пароль:
-          </label>
-          <input
+          <TextField
+            label="Пароль"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ccc',
-              borderRadius: '6px',
-              fontSize: '16px',
-              boxSizing: 'border-box'
-            }}
+            fullWidth
+            autoComplete="current-password"
             placeholder="Введите пароль"
           />
-        </div>
-
-        {error && (
-          <div style={{
-            marginBottom: '15px',
-            padding: '10px',
-            backgroundColor: '#fee',
-            border: '1px solid #f5c6cb',
-            borderRadius: '6px',
-            color: '#721c24',
-            fontSize: '14px'
-          }}>
-            {error}
-          </div>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: '100%',
-            padding: '12px',
-            backgroundColor: loading ? '#6c757d' : '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            cursor: loading ? 'not-allowed' : 'pointer'
-          }}
-        >
-          {loading ? 'Вход...' : 'Войти'}
-        </button>
+          {error && <Alert severity="error">{error}</Alert>}
+          <Button type="submit" variant="contained" disabled={loading} fullWidth size="large">
+            {loading ? 'Вход...' : 'Войти'}
+          </Button>
+        </Stack>
       </form>
-    </div>
+    </Paper>
   );
 };
 

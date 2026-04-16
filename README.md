@@ -137,6 +137,23 @@ Frontend запустится на `http://localhost:3000` (или другом 
 └── docker-compose.yaml  # Конфигурация для Docker
 ```
 
+## UI-библиотека (Material UI)
+
+Во фронтенде подключены **MUI** (`@mui/material`) и **Emotion** (стили, нужны MUI). Тема задаётся в `frontend/src/theme/muiTheme.js`, провайдер оборачивает приложение в `frontend/src/index.js`.
+
+Пример использования компонентов — форма входа в `frontend/src/components/Login.jsx` (`TextField`, `Button`, `Alert`, `Paper`).
+
+`CssBaseline` в `index.js` выравнивает базовые отступы браузера; если что-то в вёрстке «поедет», его можно временно убрать.
+
+## CI/CD (GitHub Actions)
+
+В репозитории есть workflow **`.github/workflows/ci.yml`**. Он запускается при push и pull request в ветки `main` и `master` и проверяет:
+
+- **backend:** `go vet`, `go test`, `go build`
+- **frontend:** `npm ci`, `npm run build`
+
+Это **не деплой**, а проверка, что код собирается.
+
 ## API Endpoints
 
 Основные эндпоинты (полный список в Swagger):

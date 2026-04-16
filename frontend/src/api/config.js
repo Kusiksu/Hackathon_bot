@@ -23,7 +23,9 @@ axios.interceptors.request.use(
 // Создаем конфигурацию с вашим сервером
 // Используем функцию для получения токена, чтобы он всегда был актуальным
 const apiConfig = new Configuration({
-  basePath: 'https://namico.ru/api/v1', // Базовый URL вашего API
+  // Важно: `namico.ru` сейчас отдаёт некорректный SSL (ERR_CERT_COMMON_NAME_INVALID).
+  // Используем `www` по умолчанию, а при необходимости можно переопределить через .env: REACT_APP_API_BASE_URL
+  basePath: (process.env.REACT_APP_API_BASE_URL || 'https://www.namico.ru/api/v1'), // Базовый URL вашего API
   accessToken: getToken, // Передаем функцию, чтобы токен всегда брался актуальный
 });
 

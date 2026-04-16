@@ -19,7 +19,10 @@ import type { Configuration } from './configuration.ts';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 
-export const BASE_PATH = "https://namico.ru/api/v1".replace(/\/+$/, "");
+// Важно: `namico.ru` сейчас отдаёт некорректный SSL (ERR_CERT_COMMON_NAME_INVALID).
+// По умолчанию используем `www`, но даём возможность переопределить через env.
+// В CRA `process.env.REACT_APP_*` доступен в браузере на этапе сборки.
+export const BASE_PATH = (process.env.REACT_APP_API_BASE_URL || "https://www.namico.ru/api/v1").replace(/\/+$/, "");
 
 export const COLLECTION_FORMATS = {
     csv: ",",

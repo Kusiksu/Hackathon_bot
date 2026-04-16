@@ -2189,11 +2189,32 @@ const Charity = ({ onOpenPost }) => {
                 const amount = post.amount || 0;
                 const progress = amount > 0 ? (collected / amount * 100) : 0;
                 const uniqueId = generatePostId(post.id);
-                
-                // Используем уже преобразованные данные из контекста
-                const postImages = post.images && Array.isArray(post.images) ? post.images : [];
-                const authorAvatar = post.author?.avatar || post.avatar || null;
+
+                // Для демо: если есть локально созданный пост, подставляем из него аватар и изображения
+                let isCreatedPostMatch = false;
+                if (createdPost) {
+                  const createdUniqueId = generatePostId(createdPost.id);
+                  isCreatedPostMatch =
+                    createdPost.id === post.id || createdUniqueId === uniqueId;
+                }
+
+                // Используем уже преобразованные данные из контекста,
+                // но для созданного поста приоритет у локально сохранённых превью
+                let postImages =
+                  post.images && Array.isArray(post.images) ? post.images.slice() : [];
+                let authorAvatar = post.author?.avatar || post.avatar || null;
                 const authorName = post.author?.name || post.user?.name || 'Аноним';
+
+                if (isCreatedPostMatch) {
+                  if (helperPostMediaPreview && helperPostMediaPreview.length > 0) {
+                    postImages = helperPostMediaPreview;
+                  } else if (createdPost.images && createdPost.images.length > 0) {
+                    postImages = createdPost.images;
+                }
+                  if (helperPostAvatarPreview || createdPost.avatar) {
+                    authorAvatar = createdPost.avatar || helperPostAvatarPreview;
+                  }
+                }
                 
                 // Логируем для первого поста
                 if (postsToShow.indexOf(post) === 0) {
