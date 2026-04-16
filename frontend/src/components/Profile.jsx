@@ -5,7 +5,7 @@ import { updateToken as updateTokenConfig } from '../api/config';
 import { setCurrentPhone, clearUserDataForPhone, getStorageItem, setStorageItem, getSavedPhone } from '../utils/storage';
 
 const Profile = ({ isLightTheme, onThemeToggle }) => {
-  const { userProfile, loading, loadProfile, loadChats } = useApp();
+  const { userProfile, loadProfile, loadChats } = useApp();
   const [showModal, setShowModal] = useState(!localStorage.getItem('token'));
   const [authMode, setAuthMode] = useState('login'); // 'login' или 'register'
   

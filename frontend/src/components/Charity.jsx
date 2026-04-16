@@ -81,9 +81,9 @@ const Charity = ({ onOpenPost }) => {
     phone: '',
     media: null
   });
-  const [postMediaPreview, setPostMediaPreview] = useState([]);
-  const [postLoading, setPostLoading] = useState(false);
-  const [postError, setPostError] = useState(null);
+  const [, setPostMediaPreview] = useState([]);
+  const [, setPostLoading] = useState(false);
+  const [, setPostError] = useState(null);
 
   // Используем ref для хранения blob URL'ов для очистки
   const blobUrlsRef = useRef([]);
@@ -127,7 +127,8 @@ const Charity = ({ onOpenPost }) => {
     if (mode !== 'processing') {
       restoreDataForPhone(phone);
     }
-  }, [mode]); // Запускаем при изменении mode, чтобы восстановить данные при восстановлении режима
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- restoreDataForPhone ниже; только mode/инициализация
+  }, [mode]);
   
   // Функция для восстановления данных для конкретного номера телефона
   const restoreDataForPhone = (phone) => {
@@ -1143,6 +1144,7 @@ const Charity = ({ onOpenPost }) => {
     }
   };
 
+  /* eslint-disable no-unused-vars -- черновики формы поста, пока не привязаны к разметке */
   const handlePostInputChange = (e) => {
     const { name, value } = e.target;
     setPostFormData(prev => ({ ...prev, [name]: value }));
@@ -1215,6 +1217,7 @@ const Charity = ({ onOpenPost }) => {
       setPostLoading(false);
     }
   };
+  /* eslint-enable no-unused-vars */
 
   return (
     <div className="content-section active" id="charity">

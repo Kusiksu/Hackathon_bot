@@ -10,7 +10,7 @@ const getStatusInfo = (points) => {
 
 const Rating = () => {
   const [leaderboard, setLeaderboard] = useState([]);
-  const [userRating, setUserRating] = useState({
+  const [userRating] = useState({
     name: 'Ваш рейтинг',
     status: 'Начните помогать, чтобы получить статус',
     totalPoints: 0,

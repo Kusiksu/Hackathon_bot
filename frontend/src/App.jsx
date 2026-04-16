@@ -73,7 +73,7 @@ const AppContent = () => {
     return shouldShow;
   };
   const [showRatingTab, setShowRatingTab] = useState(getInitialShowRatingTab);
-  const { posts, loadPosts } = useApp();
+  const { loadPosts } = useApp();
   const containerRef = useRef(null);
 
   // Загрузка темы из localStorage
